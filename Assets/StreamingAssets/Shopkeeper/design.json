@@ -1,0 +1,110 @@
+{
+  "shopkeeper_name": "Grizelda",
+  "shop_name": "Grizelda's Curios",
+
+  "rules": {
+    "max_rounds": 8,
+    "min_rounds_before_walk_away": 3,
+    "max_reply_chars": 240,
+    "history_turns": 6,
+    "allow_ask_increase": false,
+    "max_output_tokens": 200
+  },
+
+  "items": [
+    {
+      "id": "lantern",
+      "name": "Enchanted Lantern",
+      "description": "A brass lantern whose flame never goes out and glows brighter near hidden doors. Slightly dented.",
+      "list_price": 120,
+      "min_price": 80,
+      "max_price": 150
+    },
+    {
+      "id": "dagger",
+      "name": "Dragonbone Dagger",
+      "description": "A pale dagger carved from a wyvern's rib. Warm to the touch. Rumoured to be cursed, which is mostly a sales pitch.",
+      "list_price": 300,
+      "min_price": 210,
+      "max_price": 360
+    },
+    {
+      "id": "potion",
+      "name": "Potion of Mild Luck",
+      "description": "A fizzy green potion. Improves your luck very slightly for one afternoon. Tastes of pears.",
+      "list_price": 45,
+      "min_price": 28,
+      "max_price": 60
+    }
+  ],
+
+  "personas": [
+    {
+      "id": "stingy",
+      "display_name": "Stingy",
+      "traits": "Tight-fisted, proud and theatrical. You believe every item is worth far more than its price and treat low offers as personal insults. You concede only tiny amounts, and only after real persuasion.",
+      "default_temperature": 0.8
+    },
+    {
+      "id": "fair",
+      "display_name": "Fair",
+      "traits": "A practical, honest trader. You want a fair deal for both sides, meet reasonable offers partway, and explain your reasoning briefly.",
+      "default_temperature": 0.8
+    },
+    {
+      "id": "generous",
+      "display_name": "Generous",
+      "traits": "Warm, chatty and soft-hearted. You love seeing your wares go to good homes, are easily swayed by a sad story or a compliment, and hate haggling for long.",
+      "default_temperature": 0.8
+    }
+  ],
+
+  "text_guard": {
+    "blocked_terms": [
+      "fuck", "shit", "cunt", "bitch", "asshole", "bastard", "slut", "whore",
+      "kill you", "kill yourself", "murder you", "rape", "suicide", "nazi"
+    ],
+    "off_theme_terms": [
+      "as an ai", "an ai", "ai model", "language model", "artificial intelligence", "chatbot", "llm",
+      "chatgpt", "openai", "gemini", "anthropic", "claude", "system prompt", "my instructions", "my programming",
+      "json", "http", "www.", ".com", "internet", "online", "website", "email", "smartphone", "phone", "computer",
+      "credit card", "paypal", "bitcoin", "crypto", "dollar", "dollars", "usd", "euro", "euros", "$", "€", "£"
+    ],
+    "currency_words": ["gold", "golds", "coin", "coins", "crowns", "gp", "g"],
+    "price_cue_words": ["price", "offer", "pay", "sell", "take", "give", "deal", "cost", "costs", "worth", "for", "at"],
+    "accept_phrases": ["deal", "i'll take it", "ill take it", "sold", "agreed", "you have a deal", "it's a deal"]
+  },
+
+  "fallback_lines": {
+    "greeting": [
+      "Welcome, welcome! That {item}? A rare find. {price} gold, and worth every coin.",
+      "Ah, a customer with taste. The {item} is {price} gold. Don't touch the glass."
+    ],
+    "counter": [
+      "Hmm. I could part with it for {price} gold, and not a copper less.",
+      "You drive a hard bargain. {price} gold.",
+      "Let's meet somewhere sensible: {price} gold."
+    ],
+    "accept": [
+      "Bah, fine! {price} gold it is. Take it before I change my mind.",
+      "Deal. {price} gold, and may it serve you well."
+    ],
+    "reject": [
+      "No, no, no. {price} gold is my price.",
+      "That? I think not. It's still {price} gold.",
+      "You'll have to do better than that. {price} gold."
+    ],
+    "walk_away": [
+      "That's enough haggling for one day. Good day to you!",
+      "I won't sell it to you at all now. Out, out!"
+    ],
+    "chat": [
+      "Mm. Anything else? It's still {price} gold.",
+      "A fine piece, truly. {price} gold if you want it."
+    ],
+    "error": [
+      "Grizelda squints at you. \"Say that again? My price is still {price} gold.\"",
+      "Grizelda mutters to herself and polishes the counter. \"{price} gold. Well?\""
+    ]
+  }
+}

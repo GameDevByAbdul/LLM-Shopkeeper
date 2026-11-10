@@ -1,0 +1,4 @@
+<!-- Keep reflection-deserialized design data alive under IL2CPP managed stripping. -->
+<linker>
+  <assembly fullname="Shopkeeper.Core" preserve="all" />
+</linker>

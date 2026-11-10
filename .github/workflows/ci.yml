@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  core-tests:
+    name: Core tests (validator, session, parsing)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - run: dotnet test tools/Core.Tests --logger "console;verbosity=normal"
+
+  proxy-tests:
+    name: Proxy tests (offline, mock provider)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest proxy/test_server.py -v
+
+  sim-smoke:
+    name: Balance sim end-to-end (mock provider)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Start proxy in mock mode
+        run: |
+          LLM_PROVIDER=mock PROXY_PORT=8799 python proxy/server.py &
+          for i in $(seq 1 20); do curl -sf http://127.0.0.1:8799/health && break; sleep 0.5; done
+      - run: dotnet run --project tools/BalanceSim -- --proxy http://127.0.0.1:8799 --runs 3 --out /tmp/sim
+      - run: python tools/plot_balance.py /tmp/sim/summary.csv /tmp/sim/chart.svg
+
+  no-secrets:
+    name: No API keys committed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan tracked files for Google-style API keys
+        run: |
+          if git grep -nE 'AIza[0-9A-Za-z_-]{35}|AQ\.[0-9A-Za-z_-]{40,}'; then
+            echo "::error::Possible API key committed"; exit 1
+          fi
